@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    form label {
+
+      display: block;
+    }
+  </style>
+</head>
+
+
+
+<body>
+  <h1>Welcome to Home Page</h1>
+
+  <form class="userform">
+    <div>
+      <label for="username">
+        User Name
+      </label>
+      <input type="text" name="name" id="name" class="name">
+    </div>
+    <div>
+      <label for="email">User Email</label>
+      <input type="email" name="email" id="email" class="email">
+    </div>
+    <div>
+      <label for="lat">
+        User Latitude
+      </label>
+      <input type="text" name="lat" id="lat" class="lat">
+    </div>
+
+    <div>
+      <label for="long">User Longitude</label>
+      <input type="text" name="long" id="long" class="long">
+    </div>
+    <div>
+      <label for="zip">Zip Code</label>
+      <input type="text" name="zip" id="zip" class="zip-code">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+
+
+  <script>
+    const myForm = document.querySelector('.userform')
+
+
+    myForm.addEventListener('submit', function (event) {
+      event.preventDefault()
+      const formData = {
+        name: document.querySelector('.name').value,
+        longitude: +document.querySelector('.long').value,
+        latitude: +document.querySelector('.lat').value,
+        email: document.querySelector('.email').value,
+        zipCode: document.querySelector('.zip-code').value,
+        id: Math.floor(Math.random() * 11000)
+      }
+      console.log(formData)
+
+      fetch('/api/uploaduserinfo', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      }).then(response => response.json()).then(data => console.log(data)).catch(err => console.log(err))
+    })
+  </script>
+</body>
+
+</html>
